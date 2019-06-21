@@ -6,21 +6,21 @@ local PR_USER PR_USER_OP PR_PROMPT PR_HOST
 # Colors
 # to customise colors use spectrum method to replace value inside the square brackets
 # see bottom of the script
-user_host=${FG[214]}
-prompt_indicator=${FG[214]}
-date_time=${FG[081]}
-folders=${FG[010]}
-extra_color=${FG[082]}
+user_host=${FG[110]}
+prompt_indicator=${FG[118]}
+date_time=${FG[110]}
+folders=${FG[060]}
+extra_color=${FG[060]}
 
 # # Check the UID
 if [[ $UID -ne 0 ]]; then # normal user
  PR_USER="%{$user_host%n%f"
  PR_USER_OP='%F{green}%#%f'
- PR_PROMPT='%f$prompt_indicator➤ %f'
+ PR_PROMPT='%f$prompt_indicator %f'
 else # root
  PR_USER='%F{red}%n%f'
  PR_USER_OP='%F{red}%#%f'
- PR_PROMPT='%F{red}➤ %f'
+ PR_PROMPT='%F{red} %f'
 fi
 
 # Check if we are on SSH or not
@@ -31,6 +31,8 @@ else
 fi
 
 
+# local return_code="%(?..%F{red}%? ↵%f)"
+
 local user_host="${PR_USER}%F"
 local current_dir="%B%{$folders%}%~%f%b"
 local git_branch='$(git_prompt_info)'
@@ -39,24 +41,22 @@ local battery_indicator='🔋$(acpi | grep -o "[0-9]*"%)';
 local desktop='💻'
 local extra
 
-# Not tested. You can always manually choose the value of extra if the script does not
-# successfully detect the power supply
-if [ -d "/sys/class/power_supply" ]; then
-    # display battery life
-    extra=${battery_indicator}
-else
-    # display computer
-    extra=${desktop}
-fi
+#if [ -d "/sys/class/power_supply" ]; then
+#    # display battery life
+#    extra=${battery_indicator}
+#else
+#    # display computer
+#    extra=${desktop}
+#fi
 
 
-PROMPT="$prompt_indicator╭─ ${date_time}[%D{%c}]$extra_color ${extra}%  ${user_host} ${current_dir} ${git_branch}"$'\e[0m%}'" 
-$prompt_indicator╰─$PR_PROMPT "
+PROMPT="$prompt_indicator ${date_time}[%D{%c}]$extra_color ${desktop}%  ${user_host} ${current_dir} ${git_branch}"$'\e[0m%}'" 
+$prompt_indicator ⮞$PR_PROMPT "
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[172]%}git:(%{$FG[202]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[117]%}git:(%{$FG[013]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[172]%}) %{$fg[yellow]%}✗"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[172]%})"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[117]%}) %{$fg[yellow]%}${bold}uncommitted changes ❗"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[117]%}) %{$fg[118]%}${bold}✔"
 
 }
 
