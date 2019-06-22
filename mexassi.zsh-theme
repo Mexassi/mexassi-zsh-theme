@@ -16,11 +16,11 @@ extra_color=${FG[060]}
 if [[ $UID -ne 0 ]]; then # normal user
  PR_USER="%{$user_host%n%f"
  PR_USER_OP='%F{green}%#%f'
- PR_PROMPT='%f$prompt_indicator %f'
+ PR_PROMPT='%f$prompt_indicator⮞%f'
 else # root
  PR_USER='%F{red}%n%f'
  PR_USER_OP='%F{red}%#%f'
- PR_PROMPT='%F{red} %f'
+ PR_PROMPT='%F{red}⮞%f'
 fi
 
 # Check if we are on SSH or not
@@ -36,26 +36,26 @@ fi
 local user_host="${PR_USER}%F"
 local current_dir="%B%{$folders%}%~%f%b"
 local git_branch='$(git_prompt_info)'
-# works on any laptop with Manjaro installed. Does not work on desktop computers
-local battery_indicator='🔋$(acpi | grep -o "[0-9]*"%)';
+# works on any laptop with Manjaro installed.
+local battery_indicator='⏻ $(acpi | grep -o -m 1 "[0-9]*\%")';
 local desktop='💻'
 local extra
 
-#if [ -d "/sys/class/power_supply" ]; then
-#    # display battery life
-#    extra=${battery_indicator}
-#else
-#    # display computer
-#    extra=${desktop}
-#fi
+if [ "$(ls -A /sys/class/power_supply)" ]; then
+   # display battery life
+   extra=${battery_indicator}
+else
+   # display computer
+   extra=${desktop}
+fi
 
 
-PROMPT="$prompt_indicator ${date_time}[%D{%c}]$extra_color ${desktop}%  ${user_host} ${current_dir} ${git_branch}"$'\e[0m%}'" 
-$prompt_indicator ⮞$PR_PROMPT "
+PROMPT="$prompt_indicator${date_time}[%D{%c}]$extra_color ${extra}%  ${user_host} ${current_dir} ${git_branch}"$'\e[0m%}'" 
+$prompt_indicator$PR_PROMPT "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[117]%}git:(%{$FG[013]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[117]%}) %{$fg[yellow]%}${bold}uncommitted changes ❗"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[117]%}) %{$fg[yellow]%}${bold}❗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[117]%}) %{$fg[118]%}${bold}✔"
 
 }
