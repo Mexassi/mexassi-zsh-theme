@@ -1,8 +1,7 @@
 # Another oh-my-zsh theme
-Checks the `/sys/class/power_supply` folders is not empty to determine if the system is installed on a laptop or desktop machine.
-Reads the battery percentage grepping `acpi` command.
+Checks the `SPPowerDataType` state of charge to get the battery power and display it in the prompt.
 
-Developed and Tested on Manjaro
+Developed and Tested on a Mac
 
 ## Preview
 ![preview](./mexassi.zsh_theme.png)
