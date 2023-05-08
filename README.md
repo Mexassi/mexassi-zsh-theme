@@ -4,4 +4,4 @@ Checks the `SPPowerDataType` state of charge to get the battery power and displa
 Developed and Tested on a Mac
 
 ## Preview
-![preview](./mexassi.zsh_theme.png)
+![preview](./mexassi.zsh_theme_updated.png)
